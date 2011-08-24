@@ -1,5 +1,6 @@
 package com.platymuus.bukkit.permcompat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -85,17 +86,29 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public String[] getGroups(String world, String userName) {
-        return new String[] {};
+    	ArrayList<String> tmp = API.getPlayerSubgroups(userName);
+    	tmp.add(API.getPlayerGroup(userName));
+        return tmp.toArray(new String[0]);
     }
 
     @Override
     public boolean inGroup(String world, String userName, String groupName) {
-    	return getGroup(world, userName).equalsIgnoreCase(groupName);
+    	return inGroup(userName, groupName);
     }
 
     @Override
     public boolean inGroup(String name, String group) {
-    	return API.getPlayerGroup(name).equalsIgnoreCase(group);
+    	if (API.getPlayerGroup(name).equalsIgnoreCase(group)) {
+    		return true;
+    	}
+    	ArrayList<String> tmp = API.getPlayerSubgroups(name);
+    	for (String subgroup : tmp) {
+    		if (subgroup.equalsIgnoreCase(group)) {
+        		return true;
+        	}
+		}
+    	return false;
+    	
     }
 
     @Override
@@ -202,13 +215,14 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
     public void addGroupInfo(String world, String group, String node, Object data) {
     	if (data instanceof String) {
     		API.setGroupInfo(group, node, (String)data);
+    	} else {
+        	Logger.getLogger("Minecraft").warning("[DroxPermsBridge] addGroupInfo only supports String data");
     	}
     }
 
     @Override
     public void removeGroupInfo(String world, String group, String node) {
-    	System.out.println("test11");
-
+    	Logger.getLogger("Minecraft").warning("[DroxPermsBridge] removeGroupInfo unsupported");
     	throw new UnsupportedOperationException("Unsupported operation");
     }
 
