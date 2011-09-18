@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.hydrox.bukkit</groupId>
 	 <artifactId>DroxPermsBridge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>DroxPermsBridge</name>
     <url>https://github.com/hydrox/DroxPermsBridge</url>
     <build>
