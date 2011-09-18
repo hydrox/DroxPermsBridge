@@ -118,12 +118,20 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public String getGroupPrefix(String world, String groupName) {
-        return API.getGroupInfo(groupName, "prefix");
+        String prefix = API.getGroupInfo(groupName, "prefix");
+    	if (prefix == null) {
+    		return "";
+    	}
+        return prefix;
     }
 
     @Override
     public String getGroupSuffix(String world, String groupName) {
-        return API.getGroupInfo(groupName, "suffix");
+    	String suffix = API.getGroupInfo(groupName, "suffix");
+    	if (suffix == null) {
+    		return "";
+    	}
+        return suffix;
     }
 
     @Override
@@ -156,7 +164,11 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public String getUserPermissionString(String world, String userName, String permission) {
-    	return API.getPlayerInfo(userName, permission);
+    	String info = API.getPlayerInfo(userName, permission);
+    	if (info == null) {
+    		return "";
+    	}
+    	return info;
     }
 
     @Override

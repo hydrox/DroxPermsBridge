@@ -4,7 +4,7 @@ version: 2.7.7
 authors: [ SpaceManiac, t3hk0d3, TheYeti, Nijiko, Hydrox ]
 website: www.bukkit.org
 description: Compatibility layer between original Permissions and DroxPerms
-softdepend: [DroxPerms]
+depend: [DroxPerms]
 permissions:
   superperms.*:
     description: Acts like a global '*' permission node for plugins going through the bridge.
