@@ -86,8 +86,11 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public String[] getGroups(String world, String userName) {
-    	ArrayList<String> tmp = API.getPlayerSubgroups(userName);
-    	tmp.add(API.getPlayerGroup(userName));
+        ArrayList<String> tmp = API.getPlayerSubgroups(userName);
+        if (tmp == null) {
+            tmp = new ArrayList<String>();
+        }
+        tmp.add(API.getPlayerGroup(userName));
         return tmp.toArray(new String[0]);
     }
 
@@ -98,17 +101,19 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public boolean inGroup(String name, String group) {
-    	if (API.getPlayerGroup(name).equalsIgnoreCase(group)) {
-    		return true;
-    	}
-    	ArrayList<String> tmp = API.getPlayerSubgroups(name);
-    	for (String subgroup : tmp) {
-    		if (subgroup.equalsIgnoreCase(group)) {
-        		return true;
-        	}
-		}
-    	return false;
-    	
+        if (API.getPlayerGroup(name).equalsIgnoreCase(group)) {
+            return true;
+        }
+        ArrayList<String> tmp = API.getPlayerSubgroups(name);
+        if (tmp == null) {
+            return false;
+        }
+        for (String subgroup : tmp) {
+            if (subgroup.equalsIgnoreCase(group)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
